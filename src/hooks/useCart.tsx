@@ -11,10 +11,10 @@ interface Movie{
 
 
 const useCart = (props?: Movie[], update?: React.Dispatch<React.SetStateAction<Movie[]>>) => {
-    const [total, setTotal] = useState(0)
     const [selectedId, setSelectedId] = useState<number[]>([])
 
     const handleAdd = (id: number) => {
+        console.log(id)
         if(!selectedId.includes(id))
             setSelectedId([...selectedId, id])
         let temp: Movie[] = [];
@@ -28,16 +28,34 @@ const useCart = (props?: Movie[], update?: React.Dispatch<React.SetStateAction<M
         if(update){
             update(temp);
         }
-        setTotal(total + 1);
     }
 
-    const handleRemove = () => {
-        setTotal(total - 1);
-        console.log(selectedId)
+    const handleRemove = (id: number, removeAll?: Boolean) => {
+        let temp: Movie[] = [];
+        if(props){
+            let index: number = selectedId.indexOf(id);
+            props.map((item) => {
+                if(id === item.id)
+                    if(removeAll)
+                        temp = [...temp, {...item, unit: 0}]
+                    else
+                        temp = [...temp, {...item, unit: item.unit - 1}]
+                else
+                    temp = [...temp, item]
+            })
+            if(temp[id-1].unit === 0)
+                selectedId.splice(index, 1);
+        }
+        if(update){
+            update(temp);
+        }
     }
+    
+    useEffect(() => {
+        console.log(selectedId)
+    }, [selectedId])
 
     return {
-        total: total, 
         selectedId: selectedId,
         add: handleAdd,
         remove: handleRemove,

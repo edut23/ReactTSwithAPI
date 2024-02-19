@@ -6,14 +6,6 @@ import Catalog from './Body/catalog';
 import useProducts from '../hooks/useProducts';
 import OpenFont from '../fonts/OpenFont';
 
-interface Movie{
-  id: number,
-  title: string,
-  price: number,
-  image: string,
-  unit: number
-};
-
 
 const Main = styled.div`
   text-align: center;
@@ -27,22 +19,27 @@ const Main = styled.div`
 const Body = styled.div`
   height: calc(100% - 74px);
   display: flex;
-  align-content: center;
-  justify-content: center;
+  align-content: flex-start;
   flex-wrap: wrap;
-  margin: 0 240px;
 `
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
-  const {list, setList, total} = useProducts(setLoading);
+  const {list, setList, total, page, setPage} = useProducts(setLoading);
 
   return (
     <Main>
       <OpenFont/>
-      <Header total={total}/>
+      <Header total={total} setPage={setPage}/>
       <Body>
-        {loading ? <LoadSpinner/> : <Catalog movies={list} update={setList}/>}
+        {loading ? 
+        <LoadSpinner/> : 
+        <Catalog 
+          movies={list} 
+          update={setList} 
+          page={page} 
+          setPage={setPage}
+        />}
       </Body>
     </Main>
   );
