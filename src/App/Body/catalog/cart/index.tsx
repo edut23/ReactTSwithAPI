@@ -28,6 +28,15 @@ const EmptyCart = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    svg{
+        overflow: hidden;
+    }
+
+    @media (max-width: 800px) {
+        margin: 0 16px;
+        max-width: calc(100% - 32px);
+    }
 `
 const WarningText = styled.p`
     margin-top: 64px;
@@ -35,6 +44,10 @@ const WarningText = styled.p`
     font-size: 20px;
     font-weight: 700;
     color: #2F2E41;
+
+    @media (max-width: 800px) {
+        padding: 0 75px;
+    }
 `
 
 const Return = styled.button`
@@ -58,7 +71,7 @@ const Cart = (props: CartProps) => {
         <>
             {props.selectedId.length === 0 ?
             <EmptyCart>
-                <WarningText>Parece que não há nada por aqui :(</WarningText>
+                <WarningText>Parece que não {window.innerWidth < 800 && (<br/>)}há nada por aqui :(</WarningText>
                 <EmptyArt/>
                 <Return onClick={() => props.setPage('catalog')}>VOLTAR</Return>
             </EmptyCart>  :
