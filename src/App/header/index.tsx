@@ -2,7 +2,7 @@ import React, { SetStateAction } from 'react';
 import styled from 'styled-components'
 import Cart from '../../Assets/cartIcon';
 
-interface HeaderProps{
+interface HeaderProps {
     total: Number
     setPage: React.Dispatch<SetStateAction<string>>
 }
@@ -17,7 +17,7 @@ const AppHeader = styled.div`
     margin: 0px 240px;
     height: 74px;
 
-    @media (max-width: 800px){
+    @media (max-width: 1020px){
         margin: 0 10px;
     }
 `
@@ -64,7 +64,7 @@ const Header = (props: HeaderProps) => {
     return (
         <AppHeader>
             <Title>
-            WeMovies
+                WeMovies
             </Title>
             <CartDiv>
                 <CartText>
@@ -72,7 +72,7 @@ const Header = (props: HeaderProps) => {
                     <Itens>{props.total} itens</Itens>
                 </CartText>
                 <Svg onClick={() => props.setPage('cart')}>
-                    <Cart/>
+                    <Cart />
                 </Svg>
             </CartDiv>
         </AppHeader>

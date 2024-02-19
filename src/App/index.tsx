@@ -26,21 +26,21 @@ const Body = styled.div`
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
-  const {list, setList, total, page, setPage} = useProducts(setLoading);
+  const { list, setList, total, page, setPage } = useProducts(setLoading);
 
   return (
     <Main>
-      <OpenFont/>
-      <Header total={total} setPage={setPage}/>
+      <OpenFont />
+      <Header total={total} setPage={setPage} />
       <Body>
-        {loading ? 
-        <LoadSpinner/> : 
-        <Catalog 
-          movies={list} 
-          update={setList} 
-          page={page} 
-          setPage={setPage}
-        />}
+        {loading ?
+          <LoadSpinner /> :
+          <Catalog
+            movies={list}
+            update={setList}
+            page={page}
+            setPage={setPage}
+          />}
       </Body>
     </Main>
   );

@@ -1,7 +1,7 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { getProducts } from "../Services/products";
 
-interface Movie{
+interface Movie {
     id: number,
     title: string,
     price: number,
@@ -16,37 +16,37 @@ const useProducts = (setLoading?: React.Dispatch<React.SetStateAction<boolean>>)
 
     useEffect(() => {
         getProducts()
-        .then((result) => {
-            if(result instanceof Error){
-                alert(result.message)
-            }
-            else{
-                let temp: Movie[] = [];
-                result.data.map((item) => {
-                    temp = [...temp, {...item, unit: 0}];
-                })
-                setList(temp);
-                if(setLoading)
-                    setLoading(false);
-            }
-        })
-    },[])
+            .then((result) => {
+                if (result instanceof Error) {
+                    alert(result.message)
+                }
+                else {
+                    let temp: Movie[] = [];
+                    result.data.map((item) => {
+                        temp = [...temp, { ...item, unit: 0 }];
+
+                        return temp
+                    })
+                    setList(temp);
+                    if (setLoading)
+                        setLoading(false);
+                }
+            })
+    }, [setLoading])
 
     useEffect(() => {
         let counter = 0
         list.map((item) => {
             counter = counter + item.unit
+
+            return counter
         })
         setTotal(counter);
-        console.log(list)
     }, [list])
 
-    useEffect(() => {
-        console.log(page)
-    }, [page])
 
 
-    return {list, setList, total, page, setPage};
+    return { list, setList, total, page, setPage };
 }
 
 export default useProducts;

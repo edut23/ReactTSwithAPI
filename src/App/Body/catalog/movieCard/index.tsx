@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components'
 import AddCartIcon from '../../../../Assets/addCartIcon';
-import useCart from '../../../../hooks/useCart';
 
-interface MovieProps{
+interface MovieProps {
     id: number,
     title: string,
     price: number,
@@ -41,9 +40,9 @@ const TotalNum = styled.p`
     margin-left: 3.4px;
 `
 
-const Movie = (props: MovieProps) => {
+const MovieCard = (props: MovieProps) => {
     const AddCart = styled.button`
-        background-color: ${!props.selected ? "#009EDD" : "#039B00" } ;
+        background-color: ${!props.selected ? "#009EDD" : "#039B00"} ;
         height: 40px;
         width: 100%;
         margin-top: 8px;
@@ -58,14 +57,14 @@ const Movie = (props: MovieProps) => {
         cursor: pointer;
     `
 
-    return(
+    return (
         <Section>
-            <img src={props?.image} alt="" width={147} height={188}/>
+            <img src={props?.image} alt="" width={147} height={188} />
             <Title>{props?.title}</Title>
-            <Price>{props?.price?.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</Price>
+            <Price>{props?.price?.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Price>
             <AddCart onClick={() => props?.add(props.id)}>
                 <IconDiv>
-                    <AddCartIcon/>
+                    <AddCartIcon />
                     <TotalNum>{props.unit}</TotalNum>
                 </IconDiv>
                 ADICIONAR AO CARRINHO
@@ -74,4 +73,4 @@ const Movie = (props: MovieProps) => {
     )
 }
 
-export default Movie;
+export default MovieCard;
