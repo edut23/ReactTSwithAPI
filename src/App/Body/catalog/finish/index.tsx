@@ -14,6 +14,15 @@ const FinishCard = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    svg{
+        overflow: hidden;
+    }
+
+    @media (max-width: 800px) {
+        margin: 0 16px;
+        max-width: calc(100% - 32px);
+    }
 `
 const SuccessText = styled.p`
     margin-top: 64px;
@@ -41,13 +50,11 @@ const Return = styled.button`
 
 const Finish = (props: CartProps) => {
     return(
-        <>
-            <FinishCard>
-                <SuccessText>Compra realizada com sucesso!</SuccessText>
-                <FinishArt/>
-                <Return onClick={() => props.setPage('catalog')}>VOLTAR</Return>
-            </FinishCard> 
-        </>
+        <FinishCard>
+            <SuccessText>Compra realizada {window.innerWidth < 800 && (<br/>)}com sucesso!</SuccessText>
+            <FinishArt/>
+            <Return onClick={() => props.setPage('catalog')}>VOLTAR</Return>
+        </FinishCard> 
     )
 }
 
