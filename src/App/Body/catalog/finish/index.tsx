@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import FinishArt from "../../../../Assets/finishArt";
 
-interface CartProps{
+interface CartProps {
     setPage: React.Dispatch<React.SetStateAction<string>>,
 }
 
 const FinishCard = styled.div`
-    width: 960px;
-    margin-left: 229px;
+    width: 100%;
+    margin: 0 240px;
     border-radius: 4px;
     background-color: rgb(255, 255, 255);
     display: flex;
@@ -19,7 +19,7 @@ const FinishCard = styled.div`
         overflow: hidden;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 1020px) {
         margin: 0 16px;
         max-width: calc(100% - 32px);
     }
@@ -49,12 +49,12 @@ const Return = styled.button`
 `
 
 const Finish = (props: CartProps) => {
-    return(
+    return (
         <FinishCard>
-            <SuccessText>Compra realizada {window.innerWidth < 800 && (<br/>)}com sucesso!</SuccessText>
-            <FinishArt/>
+            <SuccessText>Compra realizada {window.innerWidth < 800 && (<br />)}com sucesso!</SuccessText>
+            <FinishArt />
             <Return onClick={() => props.setPage('catalog')}>VOLTAR</Return>
-        </FinishCard> 
+        </FinishCard>
     )
 }
 

@@ -1,6 +1,6 @@
-import { useState, useEffect} from "react";
+import { useState } from "react";
 
-interface Movie{
+interface Movie {
     id: number,
     title: string,
     price: number,
@@ -10,60 +10,68 @@ interface Movie{
 
 
 const useCart = (
-    props?: Movie[], 
-    update?: React.Dispatch<React.SetStateAction<Movie[]>>, 
+    props?: Movie[],
+    update?: React.Dispatch<React.SetStateAction<Movie[]>>,
     setPage?: React.Dispatch<React.SetStateAction<string>>
-    ) => {
+) => {
     const [selectedId, setSelectedId] = useState<number[]>([])
 
     const handleAdd = (id: number) => {
-        console.log(id)
-        if(!selectedId.includes(id))
+        if (!selectedId.includes(id))
             setSelectedId([...selectedId, id])
         let temp: Movie[] = [];
-        if(props)
+        if (props)
             props.map((item) => {
-                if(id === item.id)
-                    temp = [...temp, {...item, unit: item.unit + 1}]
+                if (id === item.id)
+                    temp = [...temp, { ...item, unit: item.unit + 1 }]
                 else
                     temp = [...temp, item]
+
+                return temp
             })
-        if(update){
+        if (update) {
             update(temp);
         }
     }
 
     const handleRemove = (id: number, removeAll?: Boolean) => {
         let temp: Movie[] = [];
-        if(props){
+        if (props) {
             let index: number = selectedId.indexOf(id);
-            props.map((item) => {
-                if(id === item.id)
-                    if(removeAll)
-                        temp = [...temp, {...item, unit: 0}]
+            let idx: number = -1;
+            props.map((item, propsIndex) => {
+                if (id === item.id) {
+                    idx = propsIndex;
+                    if (removeAll)
+                        temp = [...temp, { ...item, unit: 0 }]
                     else
-                        temp = [...temp, {...item, unit: item.unit - 1}]
+                        temp = [...temp, { ...item, unit: item.unit - 1 }]
+                }
                 else
                     temp = [...temp, item]
+                return temp
             })
-            if(temp[id-1].unit === 0)
+            if (temp[idx]?.unit === 0)
                 selectedId.splice(index, 1);
+
         }
-        if(update){
+        if (update) {
             update(temp);
         }
     }
-    
+
     const handleFinish = () => {
         let temp: Movie[] = [];
         setSelectedId([]);
-        if(props)
+        if (props)
             props.map((item) => {
-                temp = [...temp, {...item, unit: 0}]
+                temp = [...temp, { ...item, unit: 0 }]
+
+                return temp
             })
-        if(update)
+        if (update)
             update(temp);
-        if(setPage)
+        if (setPage)
             setPage('finish')
     }
 

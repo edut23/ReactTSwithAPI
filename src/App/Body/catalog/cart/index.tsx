@@ -3,7 +3,7 @@ import styled from "styled-components";
 import EmptyArt from "../../../../Assets/emptyArt";
 import ReviewCart from "./reviewCart";
 
-interface CartProps{
+interface CartProps {
     movies: Movie[],
     selectedId: number[],
     add: ((id: number) => void),
@@ -12,7 +12,7 @@ interface CartProps{
     finish: (() => void)
 }
 
-interface Movie{
+interface Movie {
     id: number,
     title: string,
     price: number,
@@ -21,8 +21,8 @@ interface Movie{
 };
 
 const EmptyCart = styled.div`
-    width: 960px;
-    margin-left: 229px;
+    width: 100%;
+    margin: 0 240px;
     border-radius: 4px;
     background-color: rgb(255, 255, 255);
     display: flex;
@@ -33,7 +33,7 @@ const EmptyCart = styled.div`
         overflow: hidden;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 1020px) {
         margin: 0 16px;
         max-width: calc(100% - 32px);
     }
@@ -45,7 +45,7 @@ const WarningText = styled.p`
     font-weight: 700;
     color: #2F2E41;
 
-    @media (max-width: 800px) {
+    @media (max-width: 1020px) {
         padding: 0 75px;
     }
 `
@@ -67,21 +67,21 @@ const Return = styled.button`
 `
 
 const Cart = (props: CartProps) => {
-    return(
+    return (
         <>
             {props.selectedId.length === 0 ?
-            <EmptyCart>
-                <WarningText>Parece que não {window.innerWidth < 800 && (<br/>)}há nada por aqui :(</WarningText>
-                <EmptyArt/>
-                <Return onClick={() => props.setPage('catalog')}>VOLTAR</Return>
-            </EmptyCart>  :
-            <ReviewCart
-                movies={props?.movies} 
-                selectId={props.selectedId} 
-                add={props.add} 
-                remove={props.remove} 
-                finish={props.finish}
-            />
+                <EmptyCart>
+                    <WarningText>Parece que não {window.innerWidth < 800 && (<br />)}há nada por aqui :(</WarningText>
+                    <EmptyArt />
+                    <Return onClick={() => props.setPage('catalog')}>VOLTAR</Return>
+                </EmptyCart> :
+                <ReviewCart
+                    movies={props?.movies}
+                    selectId={props.selectedId}
+                    add={props.add}
+                    remove={props.remove}
+                    finish={props.finish}
+                />
             }
         </>
     )
