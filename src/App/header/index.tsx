@@ -1,10 +1,10 @@
-import React from 'react';
-import useCart from '../../hooks/useCart';
+import React, { SetStateAction } from 'react';
 import styled from 'styled-components'
-import Cart from '../../Assets/cart';
+import Cart from '../../Assets/cartIcon';
 
 interface HeaderProps{
-    total: number
+    total: Number
+    setPage: React.Dispatch<SetStateAction<string>>
 }
 
 const AppHeader = styled.div`
@@ -16,6 +16,10 @@ const AppHeader = styled.div`
     justify-content: space-between;
     margin: 0px 240px;
     height: 74px;
+
+    @media (max-width: 800px){
+        margin: 0 10px;
+    }
 `
 
 const Title = styled.h1`
@@ -52,6 +56,7 @@ const Svg = styled.div`
     margin-left: 9.33px;
     width: 29.32px;
     height: 25.31px;
+    cursor: pointer;
 `
 
 const Header = (props: HeaderProps) => {
@@ -66,7 +71,7 @@ const Header = (props: HeaderProps) => {
                     <CartTitle>Meu Carrinho</CartTitle>
                     <Itens>{props.total} itens</Itens>
                 </CartText>
-                <Svg>
+                <Svg onClick={() => props.setPage('cart')}>
                     <Cart/>
                 </Svg>
             </CartDiv>

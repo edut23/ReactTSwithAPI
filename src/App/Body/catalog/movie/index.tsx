@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
-import AddCartIcon from '../../../Assets/addCartIcon';
-import useCart from '../../../hooks/useCart';
+import AddCartIcon from '../../../../Assets/addCartIcon';
+import useCart from '../../../../hooks/useCart';
 
 interface MovieProps{
     id: number,
@@ -55,6 +55,7 @@ const Movie = (props: MovieProps) => {
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
     `
 
     return(

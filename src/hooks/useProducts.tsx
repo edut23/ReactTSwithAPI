@@ -11,7 +11,8 @@ interface Movie{
 
 const useProducts = (setLoading?: React.Dispatch<React.SetStateAction<boolean>>) => {
     const [list, setList] = useState<Movie[]>([]);
-    const [total, setTotal] = useState<number>(0)
+    const [total, setTotal] = useState<number>(0);
+    const [page, setPage] = useState<string>('catalog');
 
     useEffect(() => {
         getProducts()
@@ -37,10 +38,15 @@ const useProducts = (setLoading?: React.Dispatch<React.SetStateAction<boolean>>)
             counter = counter + item.unit
         })
         setTotal(counter);
+        console.log(list)
     }, [list])
 
+    useEffect(() => {
+        console.log(page)
+    }, [page])
 
-    return {list, setList, total};
+
+    return {list, setList, total, page, setPage};
 }
 
 export default useProducts;

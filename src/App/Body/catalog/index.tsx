@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Movie from '../movie';
+import Movie from './movie';
+import Cart from './cart';
+import Finish from './finish';
 import useCart from '../../../hooks/useCart';
-import { getProducts } from '../../../Services/products';
 
 interface CatalogProps{
-    movies: Movie[]
-    update: React.Dispatch<React.SetStateAction<Movie[]>>
+    movies: Movie[],
+    update: React.Dispatch<React.SetStateAction<Movie[]>>,
+    page: string,
+    setPage: React.Dispatch<React.SetStateAction<string>>
 }
 
 interface Movie{
@@ -22,18 +25,20 @@ const Wrap = styled.div`
     gap: 16px;
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
-    `
+    margin: 0 240px;
 
+    @media (max-width: 800px) {
+        grid-template-columns: 1fr;
+        margin: 0 16px;
+    }
+`
 
 const Catalog = (props: CatalogProps) => {
-    const handleAdd = useCart(props.movies, props.update).add;
-    const selectedArray = useCart(props.movies).selectedId;
-    
-    useEffect(() => {
-        console.log(selectedArray)
-    },[handleAdd])
+    const {selectedId, add, remove, finish} = useCart(props.movies, props.update, props.setPage);
 
     return(
+        <>
+        {props?.page === 'catalog' ?
         <Wrap>
             {props?.movies.map((movie) => 
                 <Movie 
@@ -43,10 +48,22 @@ const Catalog = (props: CatalogProps) => {
                     price={movie?.price}
                     unit={movie?.unit}
                     selected={movie?.unit > 0}
-                    add={handleAdd}
+                    add={add}
                 />
             )}
-        </Wrap>
+        </Wrap> : 
+        props?.page === 'cart' ?
+        <Cart 
+            movies={props?.movies} 
+            selectedId={selectedId} 
+            add={add} 
+            remove={remove} 
+            setPage={props.setPage}
+            finish={finish}
+        /> :
+        <Finish setPage={props.setPage}/>
+        }
+        </>
     )
 }
 
