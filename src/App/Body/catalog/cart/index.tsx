@@ -9,6 +9,7 @@ interface CartProps{
     add: ((id: number) => void),
     remove: ((id: number) => void),
     setPage: React.Dispatch<React.SetStateAction<string>>,
+    finish: (() => void)
 }
 
 interface Movie{
@@ -66,6 +67,7 @@ const Cart = (props: CartProps) => {
                 selectId={props.selectedId} 
                 add={props.add} 
                 remove={props.remove} 
+                finish={props.finish}
             />
             }
         </>

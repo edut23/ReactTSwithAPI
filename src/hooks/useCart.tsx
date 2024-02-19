@@ -1,5 +1,4 @@
-import { useState, useEffect, EventHandler} from "react";
-import useProducts from './useProducts'
+import { useState, useEffect} from "react";
 
 interface Movie{
     id: number,
@@ -10,7 +9,11 @@ interface Movie{
 };
 
 
-const useCart = (props?: Movie[], update?: React.Dispatch<React.SetStateAction<Movie[]>>) => {
+const useCart = (
+    props?: Movie[], 
+    update?: React.Dispatch<React.SetStateAction<Movie[]>>, 
+    setPage?: React.Dispatch<React.SetStateAction<string>>
+    ) => {
     const [selectedId, setSelectedId] = useState<number[]>([])
 
     const handleAdd = (id: number) => {
@@ -51,14 +54,24 @@ const useCart = (props?: Movie[], update?: React.Dispatch<React.SetStateAction<M
         }
     }
     
-    useEffect(() => {
-        console.log(selectedId)
-    }, [selectedId])
+    const handleFinish = () => {
+        let temp: Movie[] = [];
+        setSelectedId([]);
+        if(props)
+            props.map((item) => {
+                temp = [...temp, {...item, unit: 0}]
+            })
+        if(update)
+            update(temp);
+        if(setPage)
+            setPage('finish')
+    }
 
     return {
         selectedId: selectedId,
         add: handleAdd,
         remove: handleRemove,
+        finish: handleFinish
     }
 }
 

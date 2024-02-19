@@ -14,6 +14,7 @@ const Main = styled.div`
   width: auto;
   min-height: 100vh;
   font-family: 'Open Sans', sans-serif;
+  overflow: auto;
 `
 
 const Body = styled.div`

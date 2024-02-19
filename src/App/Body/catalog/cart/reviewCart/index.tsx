@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MinusIcon from "../../../../../Assets/minusIcon";
 import PlusIcon from "../../../../../Assets/plusIcon";
@@ -9,6 +9,7 @@ interface CartProps{
     selectId: number[],
     add: ((id: number) => void),
     remove: ((id: number) => void) | ((id: number, removeAll: boolean) => void),
+    finish: (() => void)
 }
 
 interface Movie{
@@ -117,6 +118,7 @@ const SubtotalDiv = styled.div`
     text-align: start;
     display: flex;
     align-items: center;
+    color: #2F2E41;
 `
 
 const TrashButton = styled.div`
@@ -129,13 +131,22 @@ const TrashButton = styled.div`
     margin-right: 24px;
     justify-content: flex-end;
 `
+const HR = styled.hr`
+    margin: 0px 24px 21px;
+    height: 1px;
+    color: #999999;
+`
 
-const Return = styled.button`
+const FinishDiv = styled.div`
+    margin: 0px 24px 21px;
+    display: flex;
+    justify-content: space-between;
+`
+
+const Finish = styled.button`
     background-color:#009EDD;
-    width: 180px;
+    width: 235.42px;
     height: 40px;
-    margin-top: 32px;
-    margin-bottom: 64px;
     border-radius: 4px;
     border: none;
     color: #FFFFFF;
@@ -144,9 +155,39 @@ const Return = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+`
+
+const TotalDiv = styled.div`
+    height: 21px;
+    margin: 9.5px 0;
+    display: flex;
+    align-items: center;
+`
+
+const TotalTitle = styled.p`
+    width: 61.47px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #999999;
+` 
+const TotalPrice = styled.p`
+    width: 130.79px;
+    font-size: 24px;
+    color: #2F2E41
 `
 
 const ReviewCart = (props: CartProps) => {
+    const [total, setTotal] = useState(0);
+    
+    useEffect(() => {
+        let temp = 0;
+        props.movies.map((item) => {
+            temp = temp + (item.unit * item.price)
+        })
+        setTotal(temp)
+    }, [props.add, props.remove])
+
     return(
         <CartDiv>
             <ColumnTextDiv>
@@ -177,6 +218,14 @@ const ReviewCart = (props: CartProps) => {
                     </ProductDiv>
                 )
             })}
+            <HR/>
+            <FinishDiv>
+                <Finish onClick={props.finish}>FINALIZAR PEDIDO</Finish>
+                <TotalDiv>
+                    <TotalTitle>TOTAL</TotalTitle>
+                    <TotalPrice>{total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</TotalPrice>
+                </TotalDiv>
+            </FinishDiv>
         </CartDiv>
     )
 }

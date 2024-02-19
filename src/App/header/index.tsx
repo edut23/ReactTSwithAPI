@@ -16,6 +16,10 @@ const AppHeader = styled.div`
     justify-content: space-between;
     margin: 0px 240px;
     height: 74px;
+
+    @media (max-width: 800px){
+        margin: 0 10px;
+    }
 `
 
 const Title = styled.h1`

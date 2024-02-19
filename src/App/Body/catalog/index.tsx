@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Movie from './movie';
 import Cart from './cart';
+import Finish from './finish';
 import useCart from '../../../hooks/useCart';
 
 interface CatalogProps{
@@ -25,10 +26,15 @@ const Wrap = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
     margin: 0 240px;
-    `
+
+    @media (max-width: 800px) {
+        grid-template-columns: 1fr;
+        margin: 0 16px;
+    }
+`
 
 const Catalog = (props: CatalogProps) => {
-    const {selectedId, add, remove} = useCart(props.movies, props.update);
+    const {selectedId, add, remove, finish} = useCart(props.movies, props.update, props.setPage);
 
     return(
         <>
@@ -46,13 +52,17 @@ const Catalog = (props: CatalogProps) => {
                 />
             )}
         </Wrap> : 
+        props?.page === 'cart' ?
         <Cart 
             movies={props?.movies} 
             selectedId={selectedId} 
             add={add} 
             remove={remove} 
             setPage={props.setPage}
-        />}
+            finish={finish}
+        /> :
+        <Finish setPage={props.setPage}/>
+        }
         </>
     )
 }
