@@ -3,6 +3,7 @@ import styled from "styled-components";
 import MinusIcon from "../../../../../../Assets/minusIcon";
 import PlusIcon from "../../../../../../Assets/plusIcon";
 import TrashIcon from "../../../../../../Assets/trashIcon";
+import useCart from "../../../../../../hooks/useCart";
 
 interface CartProps {
     movies: Movie[],
@@ -167,11 +168,12 @@ const TrashButton = styled.div`
 `
 
 const ProductItem = (props: CartProps) => {
+    const isWeb = useCart().isWeb;
 
     return (
         props.movies.map((item) => {
             if (props.selectId.includes(item.id)) {
-                if (window.innerWidth > 1020)
+                if (isWeb)
                     return (
                         <ProductDiv>
                             <img src={item?.image} alt="" width={89} height={114} />

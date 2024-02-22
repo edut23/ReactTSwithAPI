@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Movie {
     id: number,
@@ -15,6 +15,7 @@ const useCart = (
     setPage?: React.Dispatch<React.SetStateAction<string>>
 ) => {
     const [selectedId, setSelectedId] = useState<number[]>([])
+    const [isWeb, setIsWeb] = useState(true);
 
     const handleAdd = (id: number) => {
         if (!selectedId.includes(id))
@@ -75,11 +76,19 @@ const useCart = (
             setPage('finish')
     }
 
+    useEffect(() => {
+        if(window.innerWidth < 1024)
+            setIsWeb(false)
+        else
+            setIsWeb(true)
+    },[window.innerWidth])
+
     return {
         selectedId: selectedId,
         add: handleAdd,
         remove: handleRemove,
-        finish: handleFinish
+        finish: handleFinish,
+        isWeb: isWeb
     }
 }
 
