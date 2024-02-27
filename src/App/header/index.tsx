@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Cart from '../../Assets/cartIcon';
 
 interface HeaderProps {
-    total: Number
+    total: number
     setPage: React.Dispatch<SetStateAction<string>>
 }
 
