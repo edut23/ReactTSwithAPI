@@ -34,7 +34,7 @@ const useCart = (
         }
     }
 
-    const handleRemove = (id: number, removeAll?: Boolean) => {
+    const handleRemove = (id: number, removeAll?: boolean) => {
         let temp: Movie[] = [];
         if (props) {
             let index: number = selectedId.indexOf(id);
