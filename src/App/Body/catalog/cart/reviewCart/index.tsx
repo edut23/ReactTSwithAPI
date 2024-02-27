@@ -8,7 +8,7 @@ interface CartProps {
     selectId: number[],
     add: ((id: number) => void),
     remove: ((id: number) => void) | ((id: number, removeAll: boolean) => void),
-    finish: (() => void)
+    finish: (() => void),
 }
 
 interface Movie {
@@ -28,6 +28,7 @@ const CartDiv = styled.div`
     flex-direction: column;
 
     @media (max-width: 1020px) {
+        min-width: 270px;
         padding: 16px;
         margin: 0 16px;
         max-width: calc(100% - 64px);
@@ -137,11 +138,11 @@ const TotalPrice = styled.p`
 `
 
 const ReviewCart = (props: CartProps) => {
-    const total = useTotal(props);
+    const {total, mobile} = useTotal(props);
 
     return (
         <CartDiv>
-            {window.innerWidth > 800 &&
+            {!mobile &&
                 <ColumnTextDiv>
                     <Product>PRODUTO</Product>
                     <Amount>QTD</Amount>
@@ -153,6 +154,7 @@ const ReviewCart = (props: CartProps) => {
                 add={props.add}
                 remove={props.remove}
                 finish={props.finish}
+                mobile={mobile}
             />
             <Hr />
             <FinishDiv>

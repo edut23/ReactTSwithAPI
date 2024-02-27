@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface CartProps {
     movies: Movie[],
@@ -19,6 +19,22 @@ interface Movie {
 
 const useTotal = (props: CartProps) => {
     const [total, setTotal] = useState<number>(0);
+    const [mobile, setMobile] = useState<boolean>(false);
+
+    const handleWindowResize = useCallback((event: Event) => {
+        if(window.innerWidth < 1024)
+            setMobile(true);
+        else
+            setMobile(false);
+    }, []);
+    
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowResize);
+        return () => {
+            window.removeEventListener('resize', handleWindowResize);
+        };
+    }, [handleWindowResize]);
+
 
     useEffect(() => {
         let temp = 0;
@@ -30,7 +46,7 @@ const useTotal = (props: CartProps) => {
         setTotal(temp)
     }, [props.add, props.remove, props.movies])
 
-    return total;
+    return {total, mobile};
 }
 
 export default useTotal;

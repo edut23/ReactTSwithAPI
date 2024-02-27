@@ -18,6 +18,7 @@ const AppHeader = styled.div`
     height: 74px;
 
     @media (max-width: 1020px){
+        min-width: 270px;
         margin: 0 10px;
     }
 `

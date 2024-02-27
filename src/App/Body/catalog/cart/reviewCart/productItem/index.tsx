@@ -9,7 +9,8 @@ interface CartProps {
     selectId: number[],
     add: ((id: number) => void),
     remove: ((id: number, removeAll: boolean) => void),
-    finish: (() => void)
+    finish: (() => void),
+    mobile: boolean
 }
 
 interface Movie {
@@ -171,7 +172,7 @@ const ProductItem = (props: CartProps) => {
     return (
         props.movies.map((item) => {
             if (props.selectId.includes(item.id)) {
-                if (window.innerWidth > 1020)
+                if (!props?.mobile)
                     return (
                         <ProductDiv>
                             <img src={item?.image} alt="" width={89} height={114} />
